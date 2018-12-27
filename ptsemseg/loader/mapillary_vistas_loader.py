@@ -1,4 +1,5 @@
 import os
+from builtins import input
 import json
 import torch
 import numpy as np
@@ -6,7 +7,8 @@ import numpy as np
 from torch.utils import data
 
 from ptsemseg.utils import recursive_glob
-from ptsemseg.augmentations import Compose, Image, RandomHorizontallyFlip, RandomRotate
+from ptsemseg.augmentations import Compose, RandomHorizontallyFlip, RandomRotate
+from PIL import Image
 
 
 class mapillaryVistasLoader(data.Dataset):

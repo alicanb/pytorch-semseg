@@ -1,4 +1,5 @@
 import os
+from builtins import input
 import collections
 import torch
 import numpy as np
@@ -7,7 +8,7 @@ import scipy.misc as m
 from torch.utils import data
 
 from ptsemseg.utils import recursive_glob
-from ptsemseg.augmentations import Compose, RandomHorizontallyFlip, RandomRotate, Scale, raw_input
+from ptsemseg.augmentations import Compose, RandomHorizontallyFlip, RandomRotate, Scale
 
 
 class NYUv2Loader(data.Dataset):
@@ -156,7 +157,7 @@ if __name__ == "__main__":
             axarr[j][0].imshow(imgs[j])
             axarr[j][1].imshow(dst.decode_segmap(labels.numpy()[j]))
         plt.show()
-        a = raw_input()
+        a = input()
         if a == "ex":
             break
         else:

@@ -6,7 +6,8 @@ import scipy.misc as m
 import matplotlib.pyplot as plt
 
 from torch.utils import data
-from ptsemseg.augmentations import Compose, RandomHorizontallyFlip, RandomRotate, raw_input
+from ptsemseg.augmentations import Compose, RandomHorizontallyFlip, RandomRotate
+from builtins import input
 
 
 class camvidLoader(data.Dataset):
@@ -45,7 +46,7 @@ class camvidLoader(data.Dataset):
         img = np.array(img, dtype=np.uint8)
 
         lbl = m.imread(lbl_path)
-        lbl = np.array(lbl, dtype=np.int8)
+        lbl = np.array(lbl, dtype=np.uint8)
 
         if self.augmentations is not None:
             img, lbl = self.augmentations(img, lbl)
@@ -132,7 +133,7 @@ if __name__ == "__main__":
             axarr[j][0].imshow(imgs[j])
             axarr[j][1].imshow(dst.decode_segmap(labels.numpy()[j]))
         plt.show()
-        a = raw_input()
+        a = input()
         if a == "ex":
             break
         else:
