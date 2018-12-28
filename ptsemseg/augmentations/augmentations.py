@@ -14,7 +14,10 @@ class Compose(object):
 
     def __call__(self, img, mask):
         if isinstance(img, np.ndarray):
-            img = Image.fromarray(img, mode="RGB")
+            if img.ndim == 2:
+                img = Image.fromarray(img, mode="L")
+            else:
+                img = Image.fromarray(img, mode="RGB")
             mask = Image.fromarray(mask, mode="L")
             self.PIL2Numpy = True
 
@@ -119,7 +122,7 @@ class CenterCrop(object):
 
 
 class RandomHorizontallyFlip(object):
-    def __init__(self, p):
+    def __init__(self, p=0.5):
         self.p = p
 
     def __call__(self, img, mask):
@@ -129,7 +132,7 @@ class RandomHorizontallyFlip(object):
 
 
 class RandomVerticallyFlip(object):
-    def __init__(self, p):
+    def __init__(self, p=0.5):
         self.p = p
 
     def __call__(self, img, mask):
@@ -202,6 +205,7 @@ class RandomRotate(object):
         self.degree = degree
 
     def __call__(self, img, mask):
+        fill_color = 0 if img.mode == "L" else (0, 0, 0)
         rotate_degree = random.random() * 2 * self.degree - self.degree
         return (
             tf.affine(
@@ -210,7 +214,7 @@ class RandomRotate(object):
                 scale=1.0,
                 angle=rotate_degree,
                 resample=Image.BILINEAR,
-                fillcolor=(0, 0, 0),
+                fillcolor=fill_color,
                 shear=0.0,
             ),
             tf.affine(

@@ -56,7 +56,6 @@ def train(cfg, writer, logger):
     )
 
     n_classes = t_loader.n_classes
-    print(len(t_loader))
     trainloader = data.DataLoader(
         t_loader,
         batch_size=cfg["training"]["batch_size"],
